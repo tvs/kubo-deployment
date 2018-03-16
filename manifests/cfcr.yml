@@ -121,7 +121,25 @@ instance_groups:
   stemcell: trusty
   vm_type: small
   persistent_disk: 5120
-
+- name: enableDiskUUID
+  instances: 1
+  networks:
+  - name: default
+  azs: [z1]
+  jobs:
+  - name: enableDiskUUID
+    release: kubo
+    properties:
+      vsphere:
+        user: ((vcenter_master_user))
+        password: ((vcenter_master_password))
+        server: ((vcenter_ip))
+        insecure-flag: 1
+        datacenter: ((vcenter_dc))
+    consumes:
+      kubernetes-workers: {from: nodes, ip_addresses: true}
+  stemcell: trusty
+  vm_type: minimal
 - name: worker
   instances: 3
   networks:
@@ -156,6 +174,8 @@ instance_groups:
       tls:
         kubernetes: ((tls-kubernetes))
         kubelet: ((tls-kubelet))
+    provides:
+      kubernetes-workers: {as: nodes}
   - name: kube-proxy
     release: kubo
     properties:
