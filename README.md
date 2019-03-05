@@ -1,4 +1,5 @@
 # kubo-deployment
+Some garbage
 
 Kubo is a [BOSH](https://bosh.io/) release for Kubernetes. It provides a solution for deploying and managing Kubernetes with BOSH
 
